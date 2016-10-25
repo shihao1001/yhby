@@ -13,4 +13,6 @@ public interface UserMapper {
 	public void saveOwnSign(User user);
 	public void saveGender(User user);
 	
+	public User getUserByToken(String token);
+	
 }

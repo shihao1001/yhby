@@ -28,6 +28,12 @@
 		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
 		
 	</resultMap>
+	
+	<select id="getUserByToken" parameterType="String" resultMap="userMap">
+	   select mobile_no,user_name,nick_name,identity_id,home_addr,community_name,company_addr,gender,
+	   birthday,picture_url,own_label,own_sign,is_realname,create_time,update_time 
+	   from t_user user,t_user_session session where user.user_id = session.user_id and session.token = #{token}
+	</select>
 
 	<insert id="saveUser" parameterType="com.tiantian.domain.User"
 		keyProperty="user_id" useGeneratedKeys="true">
@@ -67,6 +73,8 @@
 	<update id="saveGender" parameterType="com.tiantian.domain.User">
 		update t_user set gender = #{gender} where mobile_no = #{mobileNo}
 	</update>
+	
+	
 	
 	
 </mapper>

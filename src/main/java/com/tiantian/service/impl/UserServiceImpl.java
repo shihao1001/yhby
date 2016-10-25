@@ -23,6 +23,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	public UserMapper userMapper;
 	
+	
+	@Override
+	public User getUserByToken(String token) {
+		return userMapper.getUserByToken(token);
+	}
+	
 	@Override
 	public boolean registerUser(String mobileNo, String password) throws SrvException{
 		User user = this.getUser(mobileNo);
@@ -38,6 +44,9 @@ public class UserServiceImpl implements UserService {
 		User user = userMapper.getUserByMobile(mobileNo);
 		if(user == null){
 			throw new SrvException(Ret.用户不存在_请先注册再登录.getErrno(),Ret.用户不存在_请先注册再登录.getMsg());
+		}
+		if(!user.getPassword().equals(password)){
+			throw new SrvException(Ret.用户或者密码不正确.getErrno(),Ret.用户或者密码不正确.getMsg());
 		}
 		UserSession session = new UserSession();
 		RandomToken randomToken = RandomToken.genToken();
@@ -79,6 +88,9 @@ public class UserServiceImpl implements UserService {
 	public User getUser(String mobileNo) {
 		return userMapper.getUserByMobile(mobileNo);
 	}
+
+
+	
 
 
 }

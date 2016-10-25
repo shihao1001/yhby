@@ -28,6 +28,17 @@ public class UserController {
 	@Autowired
 	public UserService userService;
 	
+	@RequestMapping(value = "/getUserByToken",produces="application/json")
+	@ResponseBody
+	public Object getUserByToken(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value = "token", required = true) String token){
+		    logger.info("token :"+token);
+			User user = userService.getUserByToken(token);
+			return ResponseUtils.instance(0, "success",user);
+		
+	}
+	
+	
 	
 	@RequestMapping(value = "/register",produces="application/json")
 	@ResponseBody
@@ -57,7 +68,7 @@ public class UserController {
 			){
 		
 		//logger
-		logger.info("mobileno:"+mobileNo+"   captcha:"+password);	
+		logger.info("mobileno:"+mobileNo+"   password:"+password);	
 		try {
 			UserSession session = userService.login(mobileNo, password);
 			return ResponseUtils.instance(0, "login successfully", session);

@@ -6,6 +6,8 @@ import com.tiantian.exception.SrvException;
 
 public interface UserService {
 	
+	public User getUserByToken(String token);
+	
 	public boolean registerUser(String mobileNo,String password) throws SrvException;
 	
 	public UserSession login(String mobileNo, String password) throws SrvException;

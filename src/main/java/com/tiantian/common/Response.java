@@ -14,27 +14,64 @@ public class Response {
 	
 	
 	static {
-		SUCCESS = JSON.toJSONString(new Response(Ret.SUCC));
-		FAILURE = JSON.toJSONString(new Response(Ret.UNKOWN_ERROR));
+		SUCCESS = JSON.toJSONString(new Response(Ret.SUCC.getErrno(),Ret.SUCC.getMsg()));
+		FAILURE = JSON.toJSONString(new Response(Ret.UNKOWN_ERROR.getErrno(),Ret.UNKOWN_ERROR.getMsg()));
 	}
 	
-	private Ret ret;
+	public Integer errno;
+	public String msg;
 	private String data;
-	private String cookies;
+	
+	public Response() {
+		
+	}
+	
+    public Response(Ret ret) {
+		this.errno = ret.getErrno();
+		this.msg = ret.getMsg();
+	}
+    
+    public Response(Ret ret,String data) {
+		this.errno = ret.getErrno();
+		this.msg = ret.getMsg();
+		this.data = data;
+	}
+	
+	public Response(Integer errno, String msg) {
+		super();
+		this.errno = errno;
+		this.msg = msg;
+	}
 	
 	
-	public Response(Ret ret) {
-		this.ret = ret;
-	}
-	public Response(Ret ret, String data, String cookies) {
-		this.ret = ret;
+	public Response(Integer errno, String msg, String data) {
+		super();
+		this.errno = errno;
+		this.msg = msg;
 		this.data = data;
-		this.cookies = cookies;
 	}
-	public Response(Ret ret, String data) {
-		this.ret = ret;
+	public Integer getErrno() {
+		return errno;
+	}
+	public void setErrno(Integer errno) {
+		this.errno = errno;
+	}
+	public String getMsg() {
+		return msg;
+	}
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+	public String getData() {
+		return data;
+	}
+	public void setData(String data) {
 		this.data = data;
-		this.cookies = "";
 	}
+	
+	
+	
+	
+	
 
 }
