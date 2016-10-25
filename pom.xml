@@ -9,7 +9,7 @@
 	<url>http://maven.apache.org</url>
 
 	<!-- remote maven repository -->
-	<repositories>
+	<!-- <repositories>
 		<repository>
 			<id>public</id>
 			<name>Public Repositories</name>
@@ -32,7 +32,7 @@
 			<id>snapshots</id>
 			<url>http://127.0.0.1:8081/nexus/content/repositories/snapshots</url>
 		</snapshotRepository>
-	</distributionManagement>
+	</distributionManagement> -->
 	<!-- remote maven repository end -->
 
 
