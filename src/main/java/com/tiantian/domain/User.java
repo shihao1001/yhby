@@ -20,13 +20,18 @@ public class User {
 	private String ownLabel = "";
 	private Date createTime;
 	private Date updateTime;
-	
-	public User(Long userId){
+
+	public User(Long userId) {
 		this.userId = userId;
 	}
-	
-	public User(){
-		
+
+	public User(String mobileNo, String password) {
+		this.mobileNo = mobileNo;
+		this.password = password;
+	}
+
+	public User() {
+
 	}
 
 	public Long getUserId() {
@@ -164,9 +169,5 @@ public class User {
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-	
-	
-	
-	
-	
+
 }

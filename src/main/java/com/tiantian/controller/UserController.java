@@ -1,31 +1,22 @@
 package com.tiantian.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.alibaba.fastjson.JSON;
-import com.google.gson.Gson;
-import com.tiantian.common.Response;
 import com.tiantian.common.ResponseUtils;
 import com.tiantian.common.Ret;
 import com.tiantian.domain.User;
 import com.tiantian.domain.UserSession;
+import com.tiantian.exception.SrvException;
 import com.tiantian.service.UserService;
 import com.tiantian.util.CacheUtil;
 
@@ -38,171 +29,118 @@ public class UserController {
 	public UserService userService;
 	
 	
-	@RequestMapping(value = "/captcha",produces="application/json")
+	@RequestMapping(value = "/register",produces="application/json")
 	@ResponseBody
-	public Object getCaptcha(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value = "mobileno", required = true) String mobileno
+	public Object register(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value = "mobileNo", required = true) String mobileNo,
+			@RequestParam(value = "password", required = true) String password
 			){
+		try {
+			userService.registerUser(mobileNo, password);
+			return ResponseUtils.instance(0, "register successfully");
+		} catch (SrvException e) {
+			logger.error("register user [ mobileNo="+mobileNo+",password="+password+"] SrvException", e);
+			return ResponseUtils.instance(e.getErrNo(), e.getMsg());
+		} catch (Exception e){
+			logger.error("register user [ mobileNo="+mobileNo+",password="+password+"] Exception", e);
+		}	
+		return ResponseUtils.instance(Ret.UNKOWN_ERROR.getErrno(), Ret.UNKOWN_ERROR.getMsg());
 		
-		
-		
-		return null;
 	}
 	
 	@RequestMapping(value = "/login",produces="application/json")
 	@ResponseBody
 	public Object login(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value = "mobileno", required = true) String mobileNo,
-			@RequestParam(value = "captcha", required = true) String captcha,
+			@RequestParam(value = "mobileNo", required = true) String mobileNo,
+			@RequestParam(value = "password", required = true) String password,
 			@RequestParam(value="__aeskey",required = false) String __aeskey
 			){
 		
 		//logger
-		logger.info("mobileno:"+mobileNo+"   captcha:"+captcha);
-		
-		if(!userService.checkCaptcha(mobileNo, captcha)){
-			return ResponseUtils.instance(Ret.ERROR_CAPTCHA.code, Ret.ERROR_CAPTCHA.msg);
+		logger.info("mobileno:"+mobileNo+"   captcha:"+password);	
+		try {
+			UserSession session = userService.login(mobileNo, password);
+			return ResponseUtils.instance(0, "login successfully", session);
+		} catch (SrvException e) {
+			logger.error("login user [ mobileNo="+mobileNo+",password="+password+"] SrvException", e);
+			return ResponseUtils.instance(e.getErrNo(), e.getMsg());
+		} catch (Exception e){
+			logger.error("login user [ mobileNo="+mobileNo+",password="+password+"] Exception", e);	
 		}
+		return ResponseUtils.instance(Ret.UNKOWN_ERROR.getErrno(), Ret.UNKOWN_ERROR.getMsg());
 		
-		UserSession session = userService.login(mobileNo, captcha);
-		User user = userService.getLoadedUser(mobileNo);
-		System.out.println(session.getToken()+","+session.getSecret()+","+session.getUserId());
-		//缓存用户信息
-		CacheUtil.cacheUserInfo(new User(session.getUserId()), session);
-		
-		Map<String,Object> returnMap = new HashMap<String,Object>();
-		
-		returnMap.put("token", session.getToken());
-		returnMap.put("secret", session.getSecret());
-		returnMap.put("user", JSON.toJSONString(user));
-		
-		logger.info("token:"+session.getToken() + " ;"+"secret:"+session.getSecret());
-		
-		Map<String,Object> map = new HashMap<String,Object>();
-		map.put("code", Ret.SUCC.code);
-		map.put("msg", Ret.SUCC.msg);
-		map.put("data", returnMap);
-		return map;
-		//return ResponseUtils.succ(returnMap);
 	}
 	
 	
 	@RequestMapping(value = "/saveNickname",produces="application/json")
 	@ResponseBody
 	public Object saveNickname(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value = "mobileno", required = true) String mobileNo,
+			@RequestParam(value = "mobileNo", required = true) String mobileNo,
 			@RequestParam(value = "token", required = true) String token,
-			@RequestParam(value = "nickname",required = false) String nickname
+			@RequestParam(value = "nickName",required = false) String nickName
 			){
-		logger.info("saveNickname:"+"   mobileNo="+mobileNo+",token="+token+",nickname="+nickname);
-		//从缓存获得用户信息
-		User user = (User) JSON.parseObject((String) CacheUtil.cacheMap.get("token_user_"+token), User.class);
-		System.out.println("缓存用户信息为："+(String) CacheUtil.cacheMap.get("token_user_"+token));
-		user.setNickName(nickname);
-		try{
-			userService.savaNickname(user);
-			Thread.sleep(3000);
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("code", Ret.SUCC.code);
-			map.put("msg", Ret.SUCC.msg);
-			map.put("data", "保存成功");
-			return map;
-		}catch(Exception e){
-			return null;
-		}
+		logger.info("saveNickname:"+"   mobileNo="+mobileNo+",token="+token+",nickname="+nickName);
+	    User user = new User();
+	    user.setMobileNo(mobileNo);
+	    user.setNickName(nickName);
+		userService.savaNickname(user);
+		return ResponseUtils.instance(0, "淇濆瓨鏄电О鎴愬姛");			
 	}
 	
 	
 	@RequestMapping(value = "/saveOwnLabel",produces="application/json")
 	@ResponseBody
 	public Object saveOwnLabel(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value = "mobileno", required = true) String mobileNo,
+			@RequestParam(value = "mobileNo", required = true) String mobileNo,
 			@RequestParam(value = "token", required = true) String token,
-			@RequestParam(value = "ownlabel",required = false) String ownlabel
+			@RequestParam(value = "ownLabel",required = false) String ownLabel
 			){
-		logger.info("saveOwnLabel:"+"   mobileNo="+mobileNo+",token="+token+",ownlabel="+ownlabel);
-		//从缓存获得用户信息
-		User user = (User) JSON.parseObject((String) CacheUtil.cacheMap.get("token_user_"+token), User.class);
-		System.out.println("缓存用户信息为："+(String) CacheUtil.cacheMap.get("token_user_"+token));
-		user.setOwnLabel(ownlabel);
-		try{
-			userService.savaOwnLabel(user);
-			Thread.sleep(10000);
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("code", Ret.SUCC.code);
-			map.put("msg", Ret.SUCC.msg);
-			map.put("data", "保存成功");
-			return map;
-		}catch(Exception e){
-			return null;
-		}
-		
-		
+		logger.info("saveOwnLabel:"+"   mobileNo="+mobileNo+",token="+token+",ownlabel="+ownLabel);
+		User user = new User();
+		user.setMobileNo(mobileNo);
+		user.setOwnLabel(ownLabel);
+		userService.savaOwnLabel(user);
+		return ResponseUtils.instance(0, "淇濆瓨鎴愬姛");
 	}
 	
 	
 	@RequestMapping(value = "/saveOwnSign",produces="application/json")
 	@ResponseBody
 	public Object saveOwnSign(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value = "mobileno", required = true) String mobileNo,
+			@RequestParam(value = "mobileNo", required = true) String mobileNo,
 			@RequestParam(value = "token", required = true) String token,
-			@RequestParam(value = "ownsign",required = false) String ownsign
+			@RequestParam(value = "ownSign",required = false) String ownSign
 			){
-		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",ownsign="+ownsign);
-		//从缓存获得用户信息
-		User user = (User) JSON.parseObject((String) CacheUtil.cacheMap.get("token_user_"+token), User.class);
-		System.out.println("缓存用户信息为："+(String) CacheUtil.cacheMap.get("token_user_"+token));
-		user.setOwnSign(ownsign);
-		try{
-			userService.savaOwnSign(user);
-			Thread.sleep(3000);
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("code", Ret.SUCC.code);
-			map.put("msg", Ret.SUCC.msg);
-			map.put("data", "保存成功");
-			
-			return map;
-		}catch(Exception e){
-			return null;
-		}
-		
-		
+		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",ownsign="+ownSign);
+		User user = new User();
+		user.setMobileNo(mobileNo);
+		user.setOwnSign(ownSign);
+		userService.savaOwnSign(user);
+		return ResponseUtils.instance(0, "淇濆瓨鎴愬姛");	
 	}
 	
 	
 	@RequestMapping(value = "/saveGender",produces="application/json")
 	@ResponseBody
 	public Object saveGender(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value = "mobileno", required = true) String mobileNo,
+			@RequestParam(value = "mobileNo", required = true) String mobileNo,
 			@RequestParam(value = "token", required = true) String token,
 			@RequestParam(value = "gender",required = false) String gender
 			){
 		logger.info("saveGender:"+"   mobileNo="+mobileNo+",token="+token+",gender="+gender);
-		//从缓存获得用户信息
-		User user = (User) JSON.parseObject((String) CacheUtil.cacheMap.get("token_user_"+token), User.class);
-		System.out.println("缓存用户信息为："+(String) CacheUtil.cacheMap.get("token_user_"+token));
+		//浠庣紦瀛樿幏寰楃敤鎴蜂俊鎭�
+		User user = new User();
+		user.setMobileNo(mobileNo);
 		if(null == gender || gender.equals("") ){
-			//默认为男，1
+			//榛樿涓虹敺锛�1
 			user.setGender(1);
-		}else if(gender.equals("男")){
+		}else if(gender.equals("鐢�")){
 			user.setGender(1);
-		}else if(gender.equals("女")){
+		}else if(gender.equals("濂�")){
 			user.setGender(0);
 		}
-		
-		try{
-			userService.savaGender(user);
-			Thread.sleep(3000);
-			Map<String,Object> map = new HashMap<String,Object>();
-			map.put("code", Ret.SUCC.code);
-			map.put("msg", Ret.SUCC.msg);
-			map.put("data", "保存成功");
-			
-			return map;
-		}catch(Exception e){
-			return null;
-		}
-		
+		userService.savaGender(user);
+		return ResponseUtils.instance(0, "淇濆瓨鎴愬姛");	
 		
 	}
 

@@ -10,30 +10,55 @@ public class Ret {
 	public static final Ret UNKOWN_ERROR = new Ret(999,"Unknow error!");
 	
 	public static final Ret 用户注册成功 = new Ret(100,"用户注册成功");
-	public static final Ret 用户已存在_不允许注册 = new Ret(101,"用户已存在_不允许注册");
+	public static final Ret 用户已存在_不允许注册 = new Ret(101,"用户已存在,不允许注册");
+	public static final Ret 用户不存在_请先注册再登录 = new Ret(102,"用户不存在，请先注册再登录");
 	
 	public static final Ret ERROR_CAPTCHA = new Ret(33,"验证码错误");
 	
 
-	public Integer code;
+	public Integer errno;
 	public String msg;
 	public String data;
 	
 	public Ret(){}
 
-	public Ret(Integer code, String msg) {
+	public Ret(Integer errno, String msg) {
 		super();
-		this.code = code;
+		this.errno = errno;
 		this.msg = msg;
 	}
 
-	public Ret(Integer code) {
-		this.code = code;
+	public Ret(Integer errno) {
+		this.errno = errno;
 	}
-	public Ret(Integer code, String msg,String data) {
+	public Ret(Integer errno, String msg,String data) {
 		super();
-		this.code = code;
+		this.errno = errno;
 		this.msg = msg;
+		this.data = data;
+	}
+
+	public Integer getErrno() {
+		return errno;
+	}
+
+	public void setErrno(Integer errno) {
+		this.errno = errno;
+	}
+
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
 		this.data = data;
 	}
 	

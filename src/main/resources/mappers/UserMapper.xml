@@ -2,9 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 这里的namespace名字必须为执行该sql的dao地址&nbsp; -->
-<mapper namespace="com.tiantian.dao.UserDao">
-
-
+<mapper namespace="com.tiantian.mapper.UserMapper">
 	<!-- INSERT INTO t_user(mobile_no,user_name,nick_name,identity_id,home_addr,company_addr,gender,birthday,picture_url,first_load_time) 
 		VALUES( #{mobileNo}, #{userName}, #{nickName}, #{identityId}, #{homeAddr}, 
 		#{companyAddr}, #{gender}, #{birthday}, #{pictureUrl}, #{firstLoadTime}, 
@@ -54,20 +52,20 @@
 	</insert>
 
 	<update id="saveNickname" parameterType="com.tiantian.domain.User">
-		update t_user set nick_name = #{nickName} where user_id = #{userId}
+		update t_user set nick_name = #{nickName} where mobile_no = #{mobileNo}
 	</update>
 
 
 	<update id="saveOwnLabel" parameterType="com.tiantian.domain.User">
-		update t_user set own_label = #{ownLabel} where user_id = #{userId}
+		update t_user set own_label = #{ownLabel} where mobile_no = #{mobileNo}
 	</update>
 
 	<update id="saveOwnSign" parameterType="com.tiantian.domain.User">
-		update t_user set own_sign = #{ownSign} where user_id = #{userId}
+		update t_user set own_sign = #{ownSign} where mobile_no = #{mobileNo}
 	</update>
 	
 	<update id="saveGender" parameterType="com.tiantian.domain.User">
-		update t_user set gender = #{gender} where user_id = #{userId}
+		update t_user set gender = #{gender} where mobile_no = #{mobileNo}
 	</update>
 	
 	

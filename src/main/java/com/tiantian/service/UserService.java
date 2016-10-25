@@ -2,11 +2,14 @@ package com.tiantian.service;
 
 import com.tiantian.domain.User;
 import com.tiantian.domain.UserSession;
+import com.tiantian.exception.SrvException;
 
 public interface UserService {
-	public UserSession login(String mobileno, String captcha);
+	
+	public boolean registerUser(String mobileNo,String password) throws SrvException;
+	
+	public UserSession login(String mobileNo, String password) throws SrvException;
 
-	public boolean checkCaptcha(String mobileNo, String captcha);
 
 	public void savaNickname(User user);
 
@@ -16,7 +19,8 @@ public interface UserService {
 
 	public void savaGender(User user);
 
-	public User getLoadedUser(String mobileNo);
+	public User getUser(String mobileNo);
+	
 
 	
 }
