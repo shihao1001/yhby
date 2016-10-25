@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里的namespace名字必须为执行该sql的dao地址&nbsp; -->
+<mapper namespace="com.tiantian.dao.UserDao">
+
+
+	<!-- INSERT INTO t_user(mobile_no,user_name,nick_name,identity_id,home_addr,company_addr,gender,birthday,picture_url,first_load_time) 
+		VALUES( #{mobileNo}, #{userName}, #{nickName}, #{identityId}, #{homeAddr}, 
+		#{companyAddr}, #{gender}, #{birthday}, #{pictureUrl}, #{firstLoadTime}, 
+		) -->
+
+	<resultMap type="com.tiantian.domain.User" id="userMap">
+		<id property="userId" column="user_id" jdbcType="BIGINT"/>
+		<result property="mobileNo" column="mobile_no" jdbcType="VARCHAR"/>
+		<result property="password" column="password" jdbcType="VARCHAR"/>
+		<result property="userName" column="user_name" jdbcType="VARCHAR"/>
+		<result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+		<result property="identityId" column="identity_id" jdbcType="VARCHAR"/>
+		<result property="homeAddr" column="home_addr" jdbcType="VARCHAR"/>
+		<result property="communityName" column="community_name" jdbcType="VARCHAR"/>		
+		<result property="companyAddr" column="company_addr" jdbcType="VARCHAR"/>
+		<result property="gender" column="gender" jdbcType="INTEGER"/>
+		<result property="birthday" column="birthday" jdbcType="TIMESTAMP"/>
+		<result property="pictureUrl" column="picture_url" jdbcType="VARCHAR"/>
+		<result property="ownLabel" column="own_label" jdbcType="VARCHAR"/>
+		<result property="ownSign" column="own_sign" jdbcType="VARCHAR"/>
+		<result property="isRealname" column="is_realname" jdbcType="INTEGER"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+		
+	</resultMap>
+
+	<insert id="saveUser" parameterType="com.tiantian.domain.User"
+		keyProperty="user_id" useGeneratedKeys="true">
+		INSERT INTO t_user(mobile_no,password)
+		VALUES(
+		#{mobileNo},#{password}
+
+		)
+	</insert>
+
+	<select id="getUserByMobile" parameterType="String" resultMap="userMap">
+		select * from t_user where mobile_no = #{mobileno}
+	</select>
+
+	<insert id="saveUserSession">
+		insert into t_user_session(user_id,token,secret)
+		values(
+		#{userId},
+		#{token},
+		#{secret}
+		)
+	</insert>
+
+	<update id="saveNickname" parameterType="com.tiantian.domain.User">
+		update t_user set nick_name = #{nickName} where user_id = #{userId}
+	</update>
+
+
+	<update id="saveOwnLabel" parameterType="com.tiantian.domain.User">
+		update t_user set own_label = #{ownLabel} where user_id = #{userId}
+	</update>
+
+	<update id="saveOwnSign" parameterType="com.tiantian.domain.User">
+		update t_user set own_sign = #{ownSign} where user_id = #{userId}
+	</update>
+	
+	<update id="saveGender" parameterType="com.tiantian.domain.User">
+		update t_user set gender = #{gender} where user_id = #{userId}
+	</update>
+	
+	
+</mapper>

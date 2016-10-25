@@ -1,0 +1,50 @@
+CREATE TABLE t_kid(
+    kid_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    kid_nickname VARCHAR(64),
+    kid_name VARCHAR(64),
+    kid_birthday DATE
+);
+
+CREATE TABLE t_kid_family(
+    kid_family_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    kid_family_cellphone VARCHAR(32) NOT NULL UNIQUE,
+    kid_family_name VARCHAR(64),
+    kid_family_nickname VARCHAR(64),
+    kid_family_password VARCHAR(128) NOT NULL,
+    kid_family_address VARCHAR(128)
+);
+
+
+CREATE TABLE t_kid_family_bind(
+    t_bind_id INT AUTO_INCREMENT PRIMARY KEY,
+    kid_id INT NOT NULL,
+    kid_family_id INT NOT NULL,
+    isfirstfamily TINYINT NOT NULL DEFAULT 0 COMMENT '标记是否是第一个注册为孩子的家人。1：是第一个；0：非。第一个家人具有最高权限'
+);
+
+identityId;
+	private String homeAddr;
+	private String companyAddr;
+	private Integer gender;
+	private Date birthday;
+	private String pictureUrl;
+
+CREATE DATABASE yhby DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+
+CREATE TABLE t_user(
+    user_id bigint(20) NOT NULL AUTO_INCREMENT PRIMARY KEY comment "id",
+    mobile_no VARCHAR(32) not null default "" comment "手机号",
+    user_name VARCHAR(32) not null default "" comment "姓名",
+    nick_name VARCHAR(32) not null default "" comment "网名",
+    identity_id varchar(32) not null default "" comment "身份证",
+    home_addr varchar(128) not null default "" comment "家庭地址",
+    company_addr varchar(128) not null default "" comment "公司地址",
+    gender TINYINT not null default 1 comment "性别，1：男；0：女",
+    birthday timestamp not null default CURRENT_TIMESTAMP comment "生日",
+    picture_url varchar(128) non null default "" comment "头像地址"
+    first_load_time timestamp not null default CURRENT_TIMESTAMP comment "第一次登陆时间", 
+    KEY `Index_mobile_no` (`mobile_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='用户表'
+
+
+
