@@ -20,6 +20,30 @@ public class User {
 	private String ownLabel = "";
 	private Date createTime;
 	private Date updateTime;
+	
+	/**
+	 * 新增cityId,communityId
+	 * */
+	private int cityId;
+	private Long communityId;
+	
+	
+
+	public int getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(int cityId) {
+		this.cityId = cityId;
+	}
+
+	public Long getCommunityId() {
+		return communityId;
+	}
+
+	public void setCommunityId(Long communityId) {
+		this.communityId = communityId;
+	}
 
 	public User(Long userId) {
 		this.userId = userId;
