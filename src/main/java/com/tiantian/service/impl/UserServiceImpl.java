@@ -15,7 +15,7 @@ import com.tiantian.service.UserService;
 import com.tiantian.util.CacheUtil;
 import com.tiantian.util.RandomToken;
 
-@Service("userService")
+@Service
 public class UserServiceImpl implements UserService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
@@ -89,8 +89,13 @@ public class UserServiceImpl implements UserService {
 		return userMapper.getUserByMobile(mobileNo);
 	}
 
+	@Override
+	public void savaCommunityName(User user) {
+		userMapper.savaCommunityName(user);		
+	}
 
-	
-
-
+	@Override
+	public void savaHomeAddress(User user) {
+		userMapper.savaHomeAddress(user);
+	}
 }

@@ -34,12 +34,9 @@ public class UserController {
 			@RequestParam(value = "token", required = true) String token){
 		    logger.info("token :"+token);
 			User user = userService.getUserByToken(token);
-			return ResponseUtils.instance(0, "success",user);
-		
+			return ResponseUtils.instance(0, "success",user);		
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/register",produces="application/json")
 	@ResponseBody
 	public Object register(HttpServletRequest request,HttpServletResponse response,
@@ -95,7 +92,7 @@ public class UserController {
 	    user.setMobileNo(mobileNo);
 	    user.setNickName(nickName);
 		userService.savaNickname(user);
-		return ResponseUtils.instance(0, "淇濆瓨鏄电О鎴愬姛");			
+		return ResponseUtils.instance(0, "保存成功");			
 	}
 	
 	
@@ -111,7 +108,7 @@ public class UserController {
 		user.setMobileNo(mobileNo);
 		user.setOwnLabel(ownLabel);
 		userService.savaOwnLabel(user);
-		return ResponseUtils.instance(0, "淇濆瓨鎴愬姛");
+		return ResponseUtils.instance(0, "保存成功");
 	}
 	
 	
@@ -127,7 +124,37 @@ public class UserController {
 		user.setMobileNo(mobileNo);
 		user.setOwnSign(ownSign);
 		userService.savaOwnSign(user);
-		return ResponseUtils.instance(0, "淇濆瓨鎴愬姛");	
+		return ResponseUtils.instance(0, "保存成功");	
+	}
+	
+	@RequestMapping(value = "/saveCommunityName",produces="application/json")
+	@ResponseBody
+	public Object saveCommunityName(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value = "mobileNo", required = true) String mobileNo,
+			@RequestParam(value = "token", required = true) String token,
+			@RequestParam(value = "communityName",required = false) String communityName
+			){
+		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",communityName="+communityName);
+		User user = new User();
+		user.setMobileNo(mobileNo);
+		user.setCommunityName(communityName);
+		userService.savaCommunityName(user);
+		return ResponseUtils.instance(0, "保存成功");	
+	}
+	
+	@RequestMapping(value = "/saveHomeAddress",produces="application/json")
+	@ResponseBody
+	public Object saveHomeAddress(HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(value = "mobileNo", required = true) String mobileNo,
+			@RequestParam(value = "token", required = true) String token,
+			@RequestParam(value = "homeAddress",required = false) String homeAddress
+			){
+		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",homeAddress="+homeAddress);
+		User user = new User();
+		user.setMobileNo(mobileNo);
+		user.setHomeAddr(homeAddress);
+		userService.savaHomeAddress(user);
+		return ResponseUtils.instance(0, "保存成功");	
 	}
 	
 	
@@ -138,20 +165,18 @@ public class UserController {
 			@RequestParam(value = "token", required = true) String token,
 			@RequestParam(value = "gender",required = false) String gender
 			){
-		logger.info("saveGender:"+"   mobileNo="+mobileNo+",token="+token+",gender="+gender);
-		//浠庣紦瀛樿幏寰楃敤鎴蜂俊鎭�
+		logger.info("saveGender:"+"   mobileNo="+mobileNo+", token="+token+", gender="+gender);
 		User user = new User();
 		user.setMobileNo(mobileNo);
 		if(null == gender || gender.equals("") ){
-			//榛樿涓虹敺锛�1
 			user.setGender(1);
-		}else if(gender.equals("鐢�")){
+		}else if(gender.equals("男")){
 			user.setGender(1);
-		}else if(gender.equals("濂�")){
+		}else if(gender.equals("女")){
 			user.setGender(0);
 		}
 		userService.savaGender(user);
-		return ResponseUtils.instance(0, "淇濆瓨鎴愬姛");	
+		return ResponseUtils.instance(0, "保存成功");	
 		
 	}
 

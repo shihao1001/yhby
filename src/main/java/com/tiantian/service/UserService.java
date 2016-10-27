@@ -22,6 +22,10 @@ public interface UserService {
 	public void savaGender(User user);
 
 	public User getUser(String mobileNo);
+
+	public void savaCommunityName(User user);
+
+	public void savaHomeAddress(User user);
 	
 
 	
