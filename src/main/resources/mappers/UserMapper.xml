@@ -26,7 +26,7 @@
 		<result property="isRealname" column="is_realname" jdbcType="INTEGER"/>
 		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
 		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-		<result property="cityId" column="city_id" jdbcType="INT"/>
+		<result property="cityId" column="city_id" jdbcType="INTEGER"/>
 		<result property="communityId" column="community_id" jdbcType="BIGINT"/>
 		
 	</resultMap>

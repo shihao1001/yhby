@@ -19,7 +19,7 @@ CREATE TABLE t_user(
     create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT "创建时间",
     update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT "更新时间",
     KEY `index_mobile_no` (`mobile_no`)
-) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT="用户表"
+) COMMENT="用户表"
 
 
 alter table t_user add column city_id int not null default 0 comment "所属城市id";

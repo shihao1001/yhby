@@ -10,14 +10,14 @@
 
 	<resultMap type="com.tiantian.domain.Product" id="ProductMap">
 		<id property="productId" column="product_id" jdbcType="BIGINT"/>
-		<result property="productTypeId" column="product_type_id" jdbcType="INT"/>
+		<result property="productTypeId" column="product_type_id" jdbcType="INTEGER"/>
 		<result property="userId" column="user_id" jdbcType="BIGINT"/>
 		<result property="productTitle" column="product_title" jdbcType="VARCHAR"/>
 		<result property="productSummary" column="product_summary" jdbcType="VARCHAR"/>
 		<result property="productPic" column="product_pic" jdbcType="VARCHAR"/>
 		<result property="productPrice" column="product_price" jdbcType="VARCHAR"/>
 		<result property="productUnit" column="product_unit" jdbcType="VARCHAR"/>		
-		<result property="productStatus" column="product_status" jdbcType="INT"/>
+		<result property="productStatus" column="product_status" jdbcType="INTEGER"/>
 		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
 		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
 		

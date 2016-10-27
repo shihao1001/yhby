@@ -10,15 +10,15 @@
 		<result property="communityAddress" column="community_address" jdbcType="VARCHAR"/>
 		<result property="latitude" column="community_latitude" jdbcType="DOUBLE"/>
 		<result property="longitude" column="community_longitude" jdbcType="DOUBLE"/>
-		<result property="communityStatus" column="community_status" jdbcType="INT"/>
-		<result property="cityId" column="city_id" jdbcType="INT"/>
+		<result property="communityStatus" column="community_status" jdbcType="INTEGER"/>
+		<result property="cityId" column="city_id" jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<resultMap type="com.tiantian.domain.City" id="CityMap">
-		<id property="cityId" column="city_id" jdbcType="INT"/>
+		<id property="cityId" column="city_id" jdbcType="INTEGER"/>
 		<result property="cityCode" column="city_code" jdbcType="VARCHAR"/>
 		<result property="cityName" column="city_name" jdbcType="VARCHAR"/>
-		<result property="provinceId" column="province_id" jdbcType="INT"/>
+		<result property="provinceId" column="province_id" jdbcType="INTEGER"/>
 	</resultMap>
 	
 	<resultMap id="cityWithProvince" type="com.tiantian.domain.City" extends="CityMap">
@@ -29,10 +29,10 @@
 	  select * from t_province where province_id = #{0}
 	</select>
 	
-	<select id="getAllCommunityByCityId" parameterType="INTEGER">
+	<select id="getAllCommunityByCityId" resultMap="CommunityMap" parameterType="INTEGER">
 	   select community_id,community_name,community_address,community_latitude,community_longitude,community_status,city_id  
 	   from t_community 
-	   where city_id = #{cityId}
+	   where city_id = #{cityId} and community_status = 1
 	</select>
 	
 	<select id="getAllCity" resultMap="CityMap">

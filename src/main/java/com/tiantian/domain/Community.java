@@ -1,11 +1,14 @@
 package com.tiantian.domain;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 public class Community {
 	private Long communityId;
 	private String communityName;
 	private String communityAddress;
 	private Double latitude;
 	private Double longitude;
+	@JSONField(serialize = false)
 	private Integer communityStatus;
 	private Integer cityId;
 	public Long getCommunityId() {
