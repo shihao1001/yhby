@@ -22,6 +22,9 @@ CREATE TABLE t_user(
 ) ENGINE=INNODB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT="用户表"
 
 
+alter table t_user add column city_id int not null default 0 comment "所属城市id";
+alter table t_user add column community_id bigint(20) not null default 0 comment "所属小区id";
+
 
 CREATE TABLE t_user_session(
    sid BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "sid",
@@ -33,6 +36,31 @@ CREATE TABLE t_user_session(
    KEY `Index_user_id` (`user_id`),
    UNIQUE KEY `ndex_token` (`token`)
 );
+
+create table t_community(
+  community_id bigint(20) not null auto_increment primary key comment "小区id",
+  community_name varchar(64) not null default "" comment "小区名称", 
+  community_address varchar(1024) not null default "" comment "小区地址",
+  community_latitude double not null default 0 comment "小区纬度",
+  community_longitude double not null default 0 comment "小区经度",
+  community_status int not null default 0 comment "小区开放状态，0:未知；1:开放；2:关闭",
+  city_id int not null default 0 comment "所在城市id"
+);
+
+create table t_province(
+   province_id int not null auto_increment primary key comment "省份id",
+   province_code varchar(20) not null default "" comment "省份代码",
+   province_name varchar(50) not null default "" comment "省级名称"
+)comment="省级信息表";
+
+
+create table t_city(
+  city_id int NOT NULL auto_increment primary key comment "城市id",  
+  city_code varchar(20) not null default "" comment "城市代码",  
+  city_name varchar(50) NOT NULL default "" comment "城市名称",  
+  province_id varchar(20) NOT NULL default "" comment "省份id"
+)comment="城市信息表";
+
 
 create table t_product_type(
    product_type_id int not null auto_increment primary key comment "",
