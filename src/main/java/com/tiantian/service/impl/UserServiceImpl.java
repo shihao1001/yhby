@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void savaCommunityName(User user) {
-		userMapper.savaCommunityName(user);		
+		userMapper.savaCommunity(user);		
 	}
 
 	@Override

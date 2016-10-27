@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里的namespace名字必须为执行该sql的dao地址&nbsp; -->
+<mapper namespace="com.tiantian.mapper.CommunityMapper">
+	
+	<resultMap type="com.tiantian.domain.Community" id="CommunityMap">
+		<id property="communityId" column="community_id" jdbcType="BIGINT"/>
+		<result property="communityName" column="community_name" jdbcType="VARCHAR"/>
+		<result property="communityAddress" column="community_address" jdbcType="VARCHAR"/>
+		<result property="latitude" column="community_latitude" jdbcType="DOUBLE"/>
+		<result property="longitude" column="community_longitude" jdbcType="DOUBLE"/>
+		<result property="communityStatus" column="community_status" jdbcType="INT"/>
+		<result property="cityId" column="city_id" jdbcType="INT"/>
+	</resultMap>
+	
+	<resultMap type="com.tiantian.domain.City" id="CityMap">
+		<id property="cityId" column="city_id" jdbcType="INT"/>
+		<result property="cityCode" column="city_code" jdbcType="VARCHAR"/>
+		<result property="cityName" column="city_name" jdbcType="VARCHAR"/>
+		<result property="provinceId" column="province_id" jdbcType="INT"/>
+	</resultMap>
+	
+	<resultMap id="cityWithProvince" type="com.tiantian.domain.City" extends="CityMap">
+	   <association property="province" column="province_id" select="getProvinceById"/>
+	</resultMap>
+	
+	<select id="getProvinceById">
+	  select * from t_province where province_id = #{0}
+	</select>
+	
+	<select id="getAllCommunityByCityId" parameterType="INTEGER">
+	   select community_id,community_name,community_address,community_latitude,community_longitude,community_status,city_id  
+	   from t_community 
+	   where city_id = #{cityId}
+	</select>
+	
+	<select id="getAllCity" resultMap="CityMap">
+	  select city_id,city_code,city_name,province_id from t_city
+	</select>
+	
+
+</mapper>

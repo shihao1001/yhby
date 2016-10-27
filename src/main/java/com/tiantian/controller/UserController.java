@@ -132,12 +132,14 @@ public class UserController {
 	public Object saveCommunityName(HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value = "mobileNo", required = true) String mobileNo,
 			@RequestParam(value = "token", required = true) String token,
-			@RequestParam(value = "communityName",required = false) String communityName
+			@RequestParam(value = "communityName",required = false) String communityName,
+			@RequestParam(value = "communityId",required = false) Long communityId
 			){
 		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",communityName="+communityName);
 		User user = new User();
 		user.setMobileNo(mobileNo);
 		user.setCommunityName(communityName);
+		user.setCommunityId(communityId);
 		userService.savaCommunityName(user);
 		return ResponseUtils.instance(0, "保存成功");	
 	}

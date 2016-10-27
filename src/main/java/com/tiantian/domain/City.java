@@ -5,6 +5,15 @@ public class City {
 	private String cityCode;
 	private String cityName;
 	private Integer provinceId;
+	private Province province;
+	
+	
+	public Province getProvince() {
+		return province;
+	}
+	public void setProvince(Province province) {
+		this.province = province;
+	}
 	public Integer getCityId() {
 		return cityId;
 	}

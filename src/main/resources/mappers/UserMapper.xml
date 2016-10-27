@@ -76,8 +76,8 @@
 		update t_user set gender = #{gender} where mobile_no = #{mobileNo}
 	</update>
 	
-	<update id="savaCommunityName" parameterType="com.tiantian.domain.User">
-	   update t_user set community_name = #{communityName} where mobile_no = #{mobileNo}
+	<update id="savaCommunity" parameterType="com.tiantian.domain.User">
+	   update t_user set community_name = #{communityName} and community_id = #{communityId} where mobile_no = #{mobileNo}
 	</update>
 	
 	<update id="savaHomeAddress" parameterType="com.tiantian.domain.User">
