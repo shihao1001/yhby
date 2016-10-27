@@ -67,6 +67,8 @@ create table t_product_type(
    product_type_name varchar(64) not null default "" comment ""
 );
 
+insert into t_product_type(product_type_name) values ("手工美食")，("代办跑腿"),("有房出租")
+
 
 create table t_product(
   product_id bigint(20) not null auto_increment primary key comment "产品id",
