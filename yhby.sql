@@ -67,7 +67,8 @@ create table t_product_type(
    product_type_name varchar(64) not null default "" comment ""
 );
 
-insert into t_product_type(product_type_name) values ("手工美食")，("代办跑腿"),("有房出租")
+insert into t_product_type(product_type_name) values ("手工美食")，("代办跑腿"),("有房出租"),("家庭教学")
+
 
 
 create table t_product(
