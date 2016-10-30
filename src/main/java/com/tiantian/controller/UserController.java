@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tiantian.common.ResponseUtils;
 import com.tiantian.common.Ret;
 import com.tiantian.domain.User;
+import com.tiantian.domain.UserAndSession;
 import com.tiantian.domain.UserSession;
 import com.tiantian.exception.SrvException;
 import com.tiantian.service.UserService;
@@ -34,6 +35,7 @@ public class UserController {
 			@RequestParam(value = "token", required = true) String token){
 		    logger.info("token :"+token);
 			User user = userService.getUserByToken(token);
+			logger.info("#################getUserByToken successfully!!!##################");
 			return ResponseUtils.instance(0, "success",user);		
 	}
 
@@ -67,7 +69,7 @@ public class UserController {
 		//logger
 		logger.info("mobileno:"+mobileNo+"   password:"+password);	
 		try {
-			UserSession session = userService.login(mobileNo, password);
+			UserAndSession session = userService.login(mobileNo, password);
 			return ResponseUtils.instance(0, "login successfully", session);
 		} catch (SrvException e) {
 			logger.error("login user [ mobileNo="+mobileNo+",password="+password+"] SrvException", e);

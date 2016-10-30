@@ -1,6 +1,7 @@
 package com.tiantian.service;
 
 import com.tiantian.domain.User;
+import com.tiantian.domain.UserAndSession;
 import com.tiantian.domain.UserSession;
 import com.tiantian.exception.SrvException;
 
@@ -10,7 +11,7 @@ public interface UserService {
 	
 	public boolean registerUser(String mobileNo,String password) throws SrvException;
 	
-	public UserSession login(String mobileNo, String password) throws SrvException;
+	public UserAndSession login(String mobileNo, String password) throws SrvException;
 
 
 	public void savaNickname(User user);

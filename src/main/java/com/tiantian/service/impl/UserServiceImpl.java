@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.tiantian.common.Ret;
+import com.tiantian.domain.UserAndSession;
 import com.tiantian.domain.UserSession;
 import com.tiantian.domain.User;
 import com.tiantian.exception.SrvException;
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
 
 
 	@Override
-	public UserSession login(String mobileNo, String password) throws SrvException{
+	public UserAndSession login(String mobileNo, String password) throws SrvException{
 		User user = userMapper.getUserByMobile(mobileNo);
 		if(user == null){
 			throw new SrvException(Ret.用户不存在_请先注册再登录.getErrno(),Ret.用户不存在_请先注册再登录.getMsg());
@@ -55,7 +56,9 @@ public class UserServiceImpl implements UserService {
 		
 		session.setUserId(user.getUserId());
 		userMapper.saveUserSession(session);	
-		return session;
+		
+		UserAndSession userAndSession = new UserAndSession(user,session);
+		return userAndSession;
 		
 	}
 

@@ -3,29 +3,29 @@ package com.tiantian.domain;
 import java.util.Date;
 
 public class User {
-	private Long userId;
-	private String mobileNo = "";
-	private String password = "";
-	private String userName = "";
-	private String nickName = "";
-	private String identityId = "";
-	private Integer isRealname = 0;
-	private String homeAddr = "";
-	private String communityName = "";
-	private String companyAddr = "";
-	private Integer gender = 1;
-	private Date birthday = new Date();
-	private String pictureUrl = "";
-	private String ownSign = "";
-	private String ownLabel = "";
-	private Date createTime;
-	private Date updateTime;
+	protected Long userId;
+	protected String mobileNo = "";
+	protected String password = "";
+	protected String userName = "";
+	protected String nickName = "";
+	protected String identityId = "";
+	protected Integer isRealname = 0;
+	protected String homeAddr = "";
+	protected String communityName = "";
+	protected String companyAddr = "";
+	protected Integer gender = 1;
+	protected Date birthday = new Date();
+	protected String pictureUrl = "";
+	protected String ownSign = "";
+	protected String ownLabel = "";
+	protected Date createTime;
+	protected Date updateTime;
 	
 	/**
 	 * 新增cityId,communityId
 	 * */
-	private int cityId;
-	private Long communityId;
+	protected int cityId;
+	protected Long communityId;
 	
 	
 
