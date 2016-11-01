@@ -94,7 +94,7 @@ public class UserController {
 		logger.info("saveNickname:"+"   mobileNo="+mobileNo+",token="+token+",nickname="+nickName);
 		User loginUser = tokenService.getUserByToken(token);
 		if(loginUser == null){
-			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+			return ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
 		}
 		User user = new User();
 		user.setUserId(loginUser.getUserId());
@@ -115,7 +115,7 @@ public class UserController {
 		logger.info("saveOwnLabel:"+"   mobileNo="+mobileNo+",token="+token+",ownlabel="+ownLabel);
 		User loginUser = tokenService.getUserByToken(token);
 		if(loginUser == null){
-			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+			return ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
 		}
 		User user = new User();
 		user.setUserId(loginUser.getUserId());
@@ -136,7 +136,7 @@ public class UserController {
 		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",ownsign="+ownSign);
 		User loginUser = tokenService.getUserByToken(token);
 		if(loginUser == null){
-			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+			return ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
 		}
 		User user = new User();
 		user.setUserId(loginUser.getUserId());
@@ -157,7 +157,7 @@ public class UserController {
 		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",communityName="+communityName);
 		User loginUser = tokenService.getUserByToken(token);
 		if(loginUser == null){
-			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+			return ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
 		}
 		User user = new User();
 		user.setUserId(loginUser.getUserId());
@@ -178,7 +178,7 @@ public class UserController {
 		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",homeAddress="+homeAddress);
 		User loginUser = tokenService.getUserByToken(token);
 		if(loginUser == null){
-			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+			return ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
 		}
 		User user = new User();
 		user.setUserId(loginUser.getUserId());
@@ -199,7 +199,7 @@ public class UserController {
 		logger.info("saveGender:"+"   mobileNo="+mobileNo+", token="+token+", gender="+gender);
 		User loginUser = tokenService.getUserByToken(token);
 		if(loginUser == null){
-			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+			return ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
 		}
 		User user = new User();
 		user.setMobileNo(mobileNo);
@@ -233,7 +233,7 @@ public class UserController {
 					return ResponseUtils.instance(Ret.UNKOWN_ERROR.getErrno(), Ret.UNKOWN_ERROR.getMsg());
 					
 			}else{
-				ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+				return ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
 			}
 		}catch(Exception e){
 			logger.error("saveCommunity error", e);

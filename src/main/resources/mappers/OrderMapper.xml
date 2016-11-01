@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里的namespace名字必须为执行该sql的dao地址&nbsp; -->
+<mapper namespace="com.tiantian.mapper.OrderMapper">
+	
+	<resultMap type="com.tiantian.domain.Order" id="OrderMap">
+		<id property="orderId" column="order_id" jdbcType="BIGINT"/>
+		<result property="productId" column="product_id" jdbcType="BIGINT"/>
+		<result property="price" column="price" jdbcType="INTEGER"/>
+		<result property="quantity" column="quantity" jdbcType="INTEGER"/>
+		<result property="buyerId" column="buyer_id" jdbcType="BIGINT"/>
+		<result property="sellerId" column="seller_id" jdbcType="BIGINT"/>
+		<result property="status" column="status" jdbcType="INTEGER"/>		
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<resultMap id="orderMapWithSeller" extends="OrderMap" type="com.tiantian.domain.Order">
+	   <association property="seller" column="seller_id" resultMap="sellerMap"/>
+	</resultMap>
+	
+	<resultMap id="sellerMap" type="com.tiantian.domain.User">
+	    <id property="userId" column="user_id" jdbcType="BIGINT"/>
+		<result property="mobileNo" column="mobile_no" jdbcType="VARCHAR"/>	
+		<result property="userName" column="user_name" jdbcType="VARCHAR"/>
+		<result property="nickName" column="nick_name" jdbcType="VARCHAR"/>
+		<result property="communityName" column="community_name" jdbcType="VARCHAR"/>
+		<result property="gender" column="gender" jdbcType="INTEGER"/>
+		<result property="pictureUrl" column="picture_url" jdbcType="VARCHAR"/>
+		<result property="ownLabel" column="own_label" jdbcType="VARCHAR"/>
+		<result property="ownSign" column="own_sign" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	
+	<insert id="placeOrder" parameterType="com.tiantian.domain.Order">
+	  insert into o_order(product_id,price,quantity,buyer_id,seller_id,status)
+	  values
+	  (#{productId},#{price},#{quantity},#{buyerId},#{sellerId},#{status});
+	</insert>
+	
+	<select id="getPayoutOrders" resultMap="OrderMap">
+	   select order_id,product_id,price,quantity,buyer_id,seller_id,status,create_time,update_time
+	   from o_order
+	   where buyer_id = #{userId} and order_id > #{lastOrderId} order by order_id limit 5
+	</select>
+	
+	
+	<select id="getPayoutOrdersWithSeller" resultMap="orderMapWithSeller">
+	   select o.order_id as order_id,o.product_id as product_id,o.price as price,o.quantity as quantity,o.seller_id as seller_id,o.status as status,o.create_time as create_time,o.update_time as update_time,
+	   u.user_id as user_id,u.mobile_no as mobile_no,u.user_name as user_name,u.nick_name as nick_name,u.community_name as community_name,u.gender as gender,u.picture_url as picture_url,u.own_label as own_label,u.own_sign as own_sign 
+	   from o_order o ,t_user u
+	   where buyer_id = #{userId} and order_id > #{lastOrderId} and o.seller_id = u.user_id order by order_id limit 5
+	</select>
+	
+	<select id="getIncomeOrders">
+	    select order_id,product_id,price,quantity,buyer_id,seller_id,status,create_time,update_time
+	   from o_order
+	   where seller_id = #{userId} and order_id > #{lastOrderId} order by order_id limit 5
+	
+	</select>
+	
+</mapper>

@@ -13,37 +13,42 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tiantian.common.ResponseUtils;
 import com.tiantian.common.Ret;
+import com.tiantian.domain.Order;
 import com.tiantian.domain.User;
 import com.tiantian.service.AdviceService;
+import com.tiantian.service.OrderService;
 import com.tiantian.service.TokenService;
 
 @Controller
-@RequestMapping("/advice")
-public class AdviceController {
+@RequestMapping("/order")
+public class OrderController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
+private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
 	
 	@Autowired
-	private AdviceService adviceService;
+	private OrderService orderService;
 	
 	@Autowired
 	private TokenService tokenService;
 	
-	@RequestMapping(value = "/makeAdvice",produces="application/json")
+	@RequestMapping(value = "/placeOrder",produces="application/json")
 	@ResponseBody
-	public Object makeAdvice(HttpServletRequest request,HttpServletResponse response,
+	public Object placeOrder(HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value = "token", required = true) String token,
-			@RequestParam(value = "advice", required = true) String advice){
-		logger.info("token:"+ token +" ,advice=" + advice);	
+			@RequestParam(value = "productId", required = true) Long productId
+			){
+		logger.info("token:"+ token);	
 		try{
 			User loginUser = tokenService.getUserByToken(token);
 			if(loginUser == null){
 				return ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
 			}
-			adviceService.makeAdvice(advice, loginUser.getUserId());
+			Order order = new Order();
+			order.setProductId(productId);
+			orderService.placeOrder(order);
 			return ResponseUtils.instance(0, "保存成功");	
 		} catch(Exception e){
-			logger.error("makeAdvice error", e);
+			logger.error("place order error", e);
 		}
 		return ResponseUtils.instance(Ret.UNKOWN_ERROR.getErrno(), Ret.UNKOWN_ERROR.getMsg());
 	}

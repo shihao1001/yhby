@@ -101,3 +101,19 @@ create table t_advice(
   key `Index_user_id` (`user_id`)
 );
 
+
+
+create table o_order(
+   order_id bigint(20) not null auto_increment primary key comment "自增id",
+   product_id bigint(20) not null default 0 comment "产品id",
+   price int not null default 0 comment "单价",
+   quantity int not null default 0 comment "数量",
+   buyer_id bigint(20) not null default 0 comment "购买人",
+   seller_id bigint(20) not null default 0 comment "售卖人",
+   status int not null default 0 comment "订单状态，0:创建；1:付款；2:结算",
+   create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP comment "创建时间",
+   update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT "更新时间",
+   key `Index_buyer_id` (`buyer_id`),
+   key `Index_seller_id` (`seller_id`)
+);
+
