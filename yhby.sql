@@ -64,12 +64,22 @@ create table t_city(
 )comment="城市信息表";
 
 
-create table t_product_type(
-   product_type_id int not null auto_increment primary key comment "",
-   product_type_name varchar(64) not null default "" comment ""
+--create table t_product_type(
+--   product_type_id int not null auto_increment primary key comment "",
+--   product_type_name varchar(64) not null default "" comment ""
+--);
+
+create table p_product_type(
+  id int not null auto_increment primary key comment "自增id",
+  name varchar(64) not null default "" comment "种类名称",
+  status int not null default 0 comment "状态，0:未启用；1:启用",
+  pic varchar(256) not null default "" comment "图片url",
+  rank int not null default 0 comment "排序",
+  create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP comment "创建时间",
+  update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT "更新时间"
 );
 
-insert into t_product_type(product_type_name) values ("手工美食")，("代办跑腿"),("有房出租"),("家庭教学")
+insert into p_product_type(name,rank) values ("家庭美食",1),("代办跑腿",2),("有房租售",3),("家庭教学",4)
 
 
 
