@@ -53,6 +53,8 @@ create table t_province(
    province_name varchar(50) not null default "" comment "省级名称"
 )comment="省级信息表";
 
+# alter table t_province add column status int not null default 0 comment "状态，0:未开放；1:开放";
+
 
 create table t_city(
   city_id int NOT NULL auto_increment primary key comment "城市id",  
@@ -87,3 +89,15 @@ create table t_product(
 );
 
 alter table t_product add index Index_user_id(`user_id`);
+
+
+
+create table t_advice(
+  id bigint(20) not null auto_increment primary key comment "自增id",
+  user_id bigint(20) not null default 0 comment "所属用户id",
+  advice_content varchar(2048) not null default "" comment "意见建议",
+  create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP comment "创建时间",
+  update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT "更新时间",
+  key `Index_user_id` (`user_id`)
+);
+

@@ -2,7 +2,6 @@ package com.tiantian.service;
 
 import com.tiantian.domain.User;
 import com.tiantian.domain.UserAndSession;
-import com.tiantian.domain.UserSession;
 import com.tiantian.exception.SrvException;
 
 public interface UserService {
