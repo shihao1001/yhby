@@ -35,7 +35,8 @@ private static final Logger logger = LoggerFactory.getLogger(CommunityController
 	@ResponseBody
 	public Object placeOrder(HttpServletRequest request,HttpServletResponse response,
 			@RequestParam(value = "token", required = true) String token,
-			@RequestParam(value = "productId", required = true) Long productId
+			@RequestParam(value = "productId", required = true) Long productId,
+			@RequestParam(value = "quantity", required = true) Integer quantity
 			){
 		logger.info("token:"+ token);	
 		try{
@@ -45,8 +46,10 @@ private static final Logger logger = LoggerFactory.getLogger(CommunityController
 			}
 			Order order = new Order();
 			order.setProductId(productId);
-			orderService.placeOrder(order);
-			return ResponseUtils.instance(0, "保存成功");	
+			order.setBuyerId(loginUser.getUserId());
+			order.setQuantity(quantity);
+			Order processedOrder = orderService.placeOrder(order);
+			return ResponseUtils.instance(0, "保存成功",processedOrder);	
 		} catch(Exception e){
 			logger.error("place order error", e);
 		}

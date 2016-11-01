@@ -4,6 +4,6 @@ import com.tiantian.domain.Order;
 
 public interface OrderService {
 	
-	public void placeOrder(Order order);
+	public Order placeOrder(Order order);
 
 }

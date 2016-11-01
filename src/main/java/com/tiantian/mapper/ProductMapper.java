@@ -5,5 +5,7 @@ import com.tiantian.domain.Product;
 public interface ProductMapper {
 	
 	public void createProduct(Product product);
+	
+	public Product getProductById(Long productId);
 
 }

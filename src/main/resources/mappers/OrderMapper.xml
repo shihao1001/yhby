@@ -33,10 +33,10 @@
 	</resultMap>
 	
 	
-	<insert id="placeOrder" parameterType="com.tiantian.domain.Order">
+	<insert id="placeOrder" parameterType="com.tiantian.domain.Order" keyColumn="order_id" keyProperty="orderId" useGeneratedKeys="true">
 	  insert into o_order(product_id,price,quantity,buyer_id,seller_id,status)
 	  values
-	  (#{productId},#{price},#{quantity},#{buyerId},#{sellerId},#{status});
+	  (#{productId},#{price},#{quantity},#{buyerId},#{sellerId},0);
 	</insert>
 	
 	<select id="getPayoutOrders" resultMap="OrderMap">

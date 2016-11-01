@@ -23,9 +23,18 @@
 		
 	</resultMap>
 	
-	<select id="createProduct" parameterType="com.tiantian.domain.Product">
+	<insert id="createProduct" parameterType="com.tiantian.domain.Product">
 	   insert into t_product(product_type_id,user_id,product_title,product_summary,product_pic,product_price,product_unit,product_status) 
 	   values(#{productTypeId},#{userId},#{productTitle},#{productSummary},#{productPic},#{productPrice},#{productUnit},#{productStatus})
+	</insert>
+	
+	<select id="getProductById" parameterType="Long" resultMap="ProductMap">
+	   select product_id, product_type_id,user_id,product_title,product_summary,product_pic,product_price,product_unit,product_status,create_time,update_time
+	   from t_product 
+	   where 
+	   product_id = #{productId}
 	</select>
+	
+	
 
 </mapper>
