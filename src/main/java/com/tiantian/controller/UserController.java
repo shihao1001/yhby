@@ -18,8 +18,8 @@ import com.tiantian.domain.User;
 import com.tiantian.domain.UserAndSession;
 import com.tiantian.domain.UserSession;
 import com.tiantian.exception.SrvException;
+import com.tiantian.service.TokenService;
 import com.tiantian.service.UserService;
-import com.tiantian.util.CacheUtil;
 
 @Controller
 @RequestMapping("/user")
@@ -28,6 +28,9 @@ public class UserController {
 	
 	@Autowired
 	public UserService userService;
+	
+	@Autowired
+	public TokenService tokenService;
 	
 	@RequestMapping(value = "/getUserByToken",produces="application/json")
 	@ResponseBody
@@ -90,7 +93,12 @@ public class UserController {
 			@RequestParam(value = "nickName",required = false) String nickName
 			){
 		logger.info("saveNickname:"+"   mobileNo="+mobileNo+",token="+token+",nickname="+nickName);
-	    User user = new User();
+		User loginUser = tokenService.getUserByToken(token);
+		if(loginUser == null){
+			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+		}
+		User user = new User();
+		user.setUserId(loginUser.getUserId());
 	    user.setMobileNo(mobileNo);
 	    user.setNickName(nickName);
 		userService.savaNickname(user);
@@ -106,7 +114,12 @@ public class UserController {
 			@RequestParam(value = "ownLabel",required = false) String ownLabel
 			){
 		logger.info("saveOwnLabel:"+"   mobileNo="+mobileNo+",token="+token+",ownlabel="+ownLabel);
+		User loginUser = tokenService.getUserByToken(token);
+		if(loginUser == null){
+			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+		}
 		User user = new User();
+		user.setUserId(loginUser.getUserId());
 		user.setMobileNo(mobileNo);
 		user.setOwnLabel(ownLabel);
 		userService.savaOwnLabel(user);
@@ -122,7 +135,12 @@ public class UserController {
 			@RequestParam(value = "ownSign",required = false) String ownSign
 			){
 		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",ownsign="+ownSign);
+		User loginUser = tokenService.getUserByToken(token);
+		if(loginUser == null){
+			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+		}
 		User user = new User();
+		user.setUserId(loginUser.getUserId());
 		user.setMobileNo(mobileNo);
 		user.setOwnSign(ownSign);
 		userService.savaOwnSign(user);
@@ -138,7 +156,12 @@ public class UserController {
 			@RequestParam(value = "communityId",required = false) Long communityId
 			){
 		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",communityName="+communityName);
+		User loginUser = tokenService.getUserByToken(token);
+		if(loginUser == null){
+			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+		}
 		User user = new User();
+		user.setUserId(loginUser.getUserId());
 		user.setMobileNo(mobileNo);
 		user.setCommunityName(communityName);
 		user.setCommunityId(communityId);
@@ -154,7 +177,12 @@ public class UserController {
 			@RequestParam(value = "homeAddress",required = false) String homeAddress
 			){
 		logger.info("saveOwnSign:"+"   mobileNo="+mobileNo+",token="+token+",homeAddress="+homeAddress);
+		User loginUser = tokenService.getUserByToken(token);
+		if(loginUser == null){
+			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+		}
 		User user = new User();
+		user.setUserId(loginUser.getUserId());
 		user.setMobileNo(mobileNo);
 		user.setHomeAddr(homeAddress);
 		userService.savaHomeAddress(user);
@@ -170,8 +198,13 @@ public class UserController {
 			@RequestParam(value = "gender",required = false) String gender
 			){
 		logger.info("saveGender:"+"   mobileNo="+mobileNo+", token="+token+", gender="+gender);
+		User loginUser = tokenService.getUserByToken(token);
+		if(loginUser == null){
+			ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
+		}
 		User user = new User();
 		user.setMobileNo(mobileNo);
+		user.setUserId(loginUser.getUserId());
 		if(null == gender || gender.equals("") ){
 			user.setGender(1);
 		}else if(gender.equals("男")){

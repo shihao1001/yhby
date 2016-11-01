@@ -10,5 +10,7 @@ public interface CommunityMapper {
 	public List<Community> getAllCommunityByCityId(Integer cityId);
 	
 	public List<City> getAllCity();
+	
+	public Community getCommunityById(Long communityId);
 
 }

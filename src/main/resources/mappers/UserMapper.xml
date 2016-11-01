@@ -60,28 +60,28 @@
 	</insert>
 
 	<update id="saveNickname" parameterType="com.tiantian.domain.User">
-		update t_user set nick_name = #{nickName} where mobile_no = #{mobileNo}
+		update t_user set nick_name = #{nickName} where user_id = #{userId}
 	</update>
 
 
 	<update id="saveOwnLabel" parameterType="com.tiantian.domain.User">
-		update t_user set own_label = #{ownLabel} where mobile_no = #{mobileNo}
+		update t_user set own_label = #{ownLabel} where user_id = #{userId}
 	</update>
 
 	<update id="saveOwnSign" parameterType="com.tiantian.domain.User">
-		update t_user set own_sign = #{ownSign} where mobile_no = #{mobileNo}
+		update t_user set own_sign = #{ownSign} where user_id = #{userId}
 	</update>
 	
 	<update id="saveGender" parameterType="com.tiantian.domain.User">
-		update t_user set gender = #{gender} where mobile_no = #{mobileNo}
+		update t_user set gender = #{gender} where user_id = #{userId}
 	</update>
 	
 	<update id="savaCommunity" parameterType="com.tiantian.domain.User">
-	   update t_user set community_name = #{communityName} and community_id = #{communityId} where mobile_no = #{mobileNo}
+	   update t_user set community_name = #{communityName},community_id = #{communityId},city_id = #{cityId} where user_id = #{userId}
 	</update>
 	
 	<update id="savaHomeAddress" parameterType="com.tiantian.domain.User">
-	   update t_user set home_addr = #{homeAddr} where mobile_no = #{mobileNo}
+	   update t_user set home_addr = #{homeAddr} where user_id = #{userId}
 	</update>
 	
 	

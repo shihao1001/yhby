@@ -10,5 +10,7 @@ public interface CommunityService {
 	public List<City> getAllCity();
 	
 	public List<Community> getAllCommunityByCityId(Integer cityId);
+	
+	
 
 }

@@ -30,6 +30,5 @@ public class CommunityServiceImpl implements CommunityService {
 		return communityMapper.getAllCommunityByCityId(cityId);
 	}
 
-	
 
 }

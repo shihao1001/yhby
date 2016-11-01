@@ -14,7 +14,7 @@ public interface UserMapper {
 	public void saveGender(User user);
 	
 	public User getUserByToken(String token);
-	public void savaCommunity(User user);
+	public Integer savaCommunity(User user);
 	public void savaHomeAddress(User user);
 	
 }

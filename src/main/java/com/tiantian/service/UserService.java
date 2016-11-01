@@ -28,6 +28,8 @@ public interface UserService {
 
 	public void savaHomeAddress(User user);
 	
+	public boolean saveCommunity(Integer cityId,Long communityId,Long userId);
+	
 
 	
 }

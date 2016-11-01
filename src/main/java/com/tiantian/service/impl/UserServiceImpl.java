@@ -3,17 +3,17 @@ package com.tiantian.service.impl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.tiantian.common.Ret;
 import com.tiantian.domain.UserAndSession;
 import com.tiantian.domain.UserSession;
+import com.tiantian.domain.Community;
 import com.tiantian.domain.User;
 import com.tiantian.exception.SrvException;
+import com.tiantian.mapper.CommunityMapper;
 import com.tiantian.mapper.UserMapper;
 import com.tiantian.service.UserService;
-import com.tiantian.util.CacheUtil;
 import com.tiantian.util.RandomToken;
 
 @Service
@@ -23,6 +23,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	public UserMapper userMapper;
+	
+	@Autowired
+	public CommunityMapper communityMapper;
 	
 	
 	@Override
@@ -100,5 +103,20 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void savaHomeAddress(User user) {
 		userMapper.savaHomeAddress(user);
+	}
+
+	@Override
+	public boolean saveCommunity(Integer cityId, Long communityId, Long userId) {
+		Community community = communityMapper.getCommunityById(communityId);
+		User user = new User();
+		user.setUserId(userId);
+		user.setCommunityId(community.getCommunityId());
+		user.setCommunityName(community.getCommunityName());
+		user.setCityId(community.getCityId());
+		Integer line = userMapper.savaCommunity(user);	
+		if(line == 1){
+			return true;
+		}
+		return false;
 	}
 }

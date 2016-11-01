@@ -1,7 +1,6 @@
 package com.tiantian.common;
 
 import com.alibaba.fastjson.JSON;
-import com.google.gson.Gson;
 
 public class ResponseUtils {
 	

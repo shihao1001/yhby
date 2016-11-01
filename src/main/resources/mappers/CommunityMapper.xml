@@ -39,5 +39,9 @@
 	  select city_id,city_code,city_name,province_id from t_city
 	</select>
 	
+	<select id="getCommunityById" resultMap="CommunityMap">
+	   select * from t_community where community_id = #{communityId}
+	</select>
+	
 
 </mapper>
