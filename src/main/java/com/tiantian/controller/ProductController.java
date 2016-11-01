@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tiantian.common.ResponseUtils;
 import com.tiantian.common.Ret;
 import com.tiantian.domain.Product;
-import com.tiantian.domain.User;
 import com.tiantian.service.ProductService;
 
 @Controller

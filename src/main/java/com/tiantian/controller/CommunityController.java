@@ -16,11 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.tiantian.common.ResponseUtils;
 import com.tiantian.common.Ret;
 import com.tiantian.domain.Community;
-import com.tiantian.domain.Product;
-import com.tiantian.domain.User;
 import com.tiantian.service.CommunityService;
-import com.tiantian.service.TokenService;
-import com.tiantian.service.UserService;
 
 @Controller
 @RequestMapping("/community")
@@ -31,11 +27,6 @@ public class CommunityController {
 	@Autowired
 	private CommunityService communityService;
 	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private TokenService tokenService;
 	
 	@RequestMapping(value = "/getCommunityByCityId",produces="application/json")
 	@ResponseBody
