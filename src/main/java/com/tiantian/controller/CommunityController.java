@@ -53,29 +53,5 @@ public class CommunityController {
 		return ResponseUtils.instance(Ret.UNKOWN_ERROR.getErrno(), Ret.UNKOWN_ERROR.getMsg());
 	}
 	
-	@RequestMapping(value = "/saveCommunity",produces="application/json")
-	@ResponseBody
-	public Object saveCommunity(HttpServletRequest request,HttpServletResponse response,
-			@RequestParam(value = "token", required = true) String token,
-			@RequestParam(value = "cityId", required = true) Integer cityId,
-			@RequestParam(value = "communityId", required = true) Long communityId
-			){
-		logger.info("saveCommunity :[cityId=" + cityId + ", token=" + token +", communityId="+ communityId +"]");
-		try{
-			User user = tokenService.getUserByToken(token);
-			if(user != null){
-				if(userService.saveCommunity(cityId, communityId, user.getUserId())){
-					return ResponseUtils.instance(0, "success");
-				}else 
-					return ResponseUtils.instance(Ret.UNKOWN_ERROR.getErrno(), Ret.UNKOWN_ERROR.getMsg());
-					
-			}else{
-				ResponseUtils.instance(Ret.请先登录.getErrno(), Ret.请先登录.getMsg());
-			}
-		}catch(Exception e){
-			logger.error("getCommunityByCityId error", e);
-		}
-		return ResponseUtils.instance(Ret.UNKOWN_ERROR.getErrno(), Ret.UNKOWN_ERROR.getMsg());
-	}
-
+	
 }
