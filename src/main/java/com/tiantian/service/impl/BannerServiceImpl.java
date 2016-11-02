@@ -15,8 +15,7 @@ public class BannerServiceImpl implements BannerService {
 
 	@Override
 	public List<Banner> getBanners() {
-		
-		return null;
+		return bannerMapper.getBanners();
 	}
 
 }
