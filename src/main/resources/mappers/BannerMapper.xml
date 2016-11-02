@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 这里的namespace名字必须为执行该sql的dao地址&nbsp; -->
+<mapper namespace="com.tiantian.mapper.BannerMapper">
+	
+	<resultMap type="com.tiantian.domain.Banner" id="BannerMap">
+		<id property="id" column="id" jdbcType="BIGINT"/>
+		<result property="name" column="name" jdbcType="VARCHAR"/>
+		<result property="picUrl" column="pic_url" jdbcType="VARCHAR"/>
+		<result property="isHit" column="is_hit" jdbcType="INTEGER"/>
+		<result property="linkUrl" column="link_url" jdbcType="VARCHAR"/>
+		<result property="rank" column="rank" jdbcType="INTEGER"/>
+		<result property="weight" column="weight" jdbcType="INTEGER"/>
+		<result property="isShare" column="is_share" jdbcType="INTEGER"/>
+		<result property="status" column="status" jdbcType="INTEGER"/>
+		<result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+		<result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<select id="getBanners" resultMap="BannerMap">
+	  select id,name,pic_url,is_hit,link_url,rank,weight,is_share,status,create_time,update_time
+	  from c_banner 
+	  where status = 1
+	</select>
+	
+</mapper>

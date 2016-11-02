@@ -127,3 +127,19 @@ create table o_order(
    key `Index_seller_id` (`seller_id`)
 );
 
+
+create table c_banner(
+  id bigint(20) not null auto_increment primary key comment "自增id",
+  name varchar(128) not null default "" comment "名称",
+  pic_url varchar(256) not null default "" comment "图片链接",
+  is_hit int not null default 0 comment "是否可以点击，0:不可以；1:可以",
+  link_url varchar(256) not null default "" comment "点击图片的链接",
+  rank int not null default 0 comment "排序；1:最高",
+  weight int not null default 0 comment "权重，用于显示时间长短",
+  is_share int not null default 0 comment "是否可以分享;0:不可以；1:可以",
+  status int not null default 0 comment "状态；0:无效；1:有效",
+  create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP comment "创建时间",
+  update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT "更新时间" 
+);
+
+
