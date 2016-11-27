@@ -1,3 +1,4 @@
+
 CREATE DATABASE yhby DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE t_user(
@@ -39,11 +40,11 @@ CREATE TABLE t_user_session(
 
 create table t_community(
   community_id bigint(20) not null auto_increment primary key comment "小区id",
-  community_name varchar(64) not null default "" comment "小区名称", 
-  community_address varchar(1024) not null default "" comment "小区地址",
-  community_latitude double not null default 0 comment "小区纬度",
-  community_longitude double not null default 0 comment "小区经度",
-  community_status int not null default 0 comment "小区开放状态，0:未知；1:开放；2:关闭",
+  name varchar(64) not null default "" comment "小区名称", 
+  address varchar(1024) not null default "" comment "小区地址",
+  lat double not null default 0 comment "小区纬度",
+  lng double not null default 0 comment "小区经度",
+  status int not null default 0 comment "小区开放状态，0:未知；1:开放；2:关闭",
   city_id int not null default 0 comment "所在城市id"
 );
 
@@ -80,25 +81,6 @@ create table p_product_type(
 );
 
 insert into p_product_type(name,rank) values ("家庭美食",1),("代办跑腿",2),("有房租售",3),("家庭教学",4)
-
-
-
-create table t_product(
-  product_id bigint(20) not null auto_increment primary key comment "产品id",
-  product_type_id int not null default 0 comment "产品类型",
-  user_id BIGINT(20) NOT NULL default 0 comment "产品所有者",
-  product_title varchar(256) not null default "" comment "产品标题",
-  product_summary varchar(256) not null default "" comment "产品简介",
-  product_pic varchar(1024) not null default "" comment "产品图片链接,以特殊符号间隔，如@@@",
-  product_unit varchar(32) not null default "" comment "产品售卖单位",
-  product_price int not null default 0 comment "产品价格,单位为分",
-  product_status int not null default 0 comment "产品状态，0:未知；1:待发布（草稿）；2:发布中（有效）；3:下线（无效）",
-  create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP comment "创建时间",
-  update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT "更新时间",
-  key `Index_product_type_id` (`product_type_id`)
-);
-
-alter table t_product add index Index_user_id(`user_id`);
 
 
 
@@ -142,4 +124,23 @@ create table c_banner(
   update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT "更新时间" 
 );
 
+
+
+
+create table t_product(
+  product_id bigint(20) not null auto_increment primary key comment "产品id",
+  product_type_id int not null default 0 comment "产品类型",
+  user_id BIGINT(20) NOT NULL default 0 comment "产品所有者",
+  title varchar(256) not null default "" comment "产品标题",
+  summary varchar(256) not null default "" comment "产品简介",
+  pic varchar(1024) not null default "" comment "产品图片链接,以特殊符号间隔，如@@@",
+  unit varchar(32) not null default "" comment "产品售卖单位",
+  price int not null default 0 comment "产品价格,单位为分",
+  status int not null default 0 comment "产品状态，0:未知；1:待发布（草稿）；2:发布中（有效）；3:下线（无效）",
+  create_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP comment "创建时间",
+  update_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP COMMENT "更新时间",
+  key `Index_product_type_id` (`product_type_id`)
+);
+
+alter table t_product add index Index_user_id(`user_id`);
 
